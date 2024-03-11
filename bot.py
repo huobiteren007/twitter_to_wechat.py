@@ -13,7 +13,8 @@ TWITTER_ACCESS_TOKEN_SECRET = 'HaqQfKWfLzhFJiU92Iz98L4id0I9yPj3nBQpD4Ke5GSRe'
 twitter_user_ids = ['@_0xKenny', '@Nu_ethe', '@ouyoung11', '@_0xShark', '@SJ95E', '@hongshen6666', '@kevin_airdrop']
 
 # 初始化 Twitter API
-auth = tweepy.OAuth1(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
+auth = tweepy.OAuth1Handler(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)
+auth.set_access_token(TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
 twitter_api = tweepy.API(auth)
 
 # 初始化 Google Translate
@@ -39,7 +40,7 @@ async def on_message(message: Message):
 async def check_twitter_and_send_to_wechat():
     for user_id in twitter_user_ids:
         # 获取最新的推文
-        tweets = twitter_api.user_timeline(user_id=user_id, count=1)
+        tweets = twitter_api.user_timeline(screen_name=user_id, count=1)
         latest_tweet = tweets[0].text if tweets else None
         
         if latest_tweet:
@@ -64,3 +65,4 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
+
