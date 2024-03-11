@@ -60,13 +60,14 @@ async def on_scan(qrcode: str, status: ScanStatus):
 async def main():
     await wechaty.start()
 
+async def check_twitter_periodically():
+    while True:
+        check_twitter_and_send_to_wechat()
+        await asyncio.sleep(60)  # 在再次检查 Twitter 之前等待 60 秒
+
 if __name__ == '__main__':
     # 在事件循环中启动微信机器人
     loop = asyncio.get_event_loop()
     loop.create_task(main())
-    
-    # 每隔 60 秒检查一次 Twitter
-    while True:
-        check_twitter_and_send_to_wechat()
-        await asyncio.sleep(60)  # 在再次检查 Twitter 之前等待 60 秒
+    loop.run_until_complete(check_twitter_periodically())
 
