@@ -14,7 +14,7 @@ TWITTER_ACCESS_TOKEN_SECRET = 'HaqQfKWfLzhFJiU92Iz98L4id0I9yPj3nBQpD4Ke5GSRe'
 TELEGRAM_API_TOKEN = '6701897229:AAEhXuCZj39J__f9vthuKdFIuCXq_0sUtU0'
 
 # Telegram chat ID where you want to send the messages
-TELEGRAM_CHAT_ID = 'ChatBot'
+TELEGRAM_CHAT_ID = 'https://t.me/chatgpt_bonk_bot'
 
 # Twitter user IDs to monitor
 twitter_user_ids = ['@_0xKenny', '@Nu_ethe', '@ouyoung11', '@_0xShark', '@SJ95E', '@hongshen6666', '@kevin_airdrop']
@@ -47,7 +47,7 @@ async def check_twitter_and_send_to_telegram():
             print(f'Translated tweet: {translated_tweet}')
             
             # Send the translated tweet content to Telegram
-            await bot.send_message(TELEGRAM_CHAT_ID, f'Latest tweet from user {user_id}:\n{translated_tweet}', parse_mode=ParseMode.HTML)
+            await dp.bot.send_message(TELEGRAM_CHAT_ID, f'Latest tweet from user {user_id}:\n{translated_tweet}', parse_mode=ParseMode.HTML)
 
 
 # Main function
@@ -65,7 +65,7 @@ async def check_twitter_periodically():
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
-    asyncio.run(check_twitter_periodically())
+    asyncio.run(asyncio.gather(main(), check_twitter_periodically()))
+
 
 
